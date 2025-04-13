@@ -149,7 +149,7 @@ input:checked + .slider:before {
 }
 
 .light.theme .date__input input {
-  background-color: #F2F4FD;
+  background-color: #f2f4fd;
   color: black;
   transition: 0.3s;
 }
@@ -162,7 +162,7 @@ input:checked + .slider:before {
 
 .light.theme .date__input input:hover {
   background-color: #E7E9F0;
-  color: black;
+  color: rgb(0, 0, 0);
   transition: 0.3s;
 }
 
