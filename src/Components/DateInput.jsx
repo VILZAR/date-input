@@ -235,14 +235,16 @@ function DateInput() {
           >
             <div className="calendar__header">
               <div className="calendar__header_month">
-                <button onClick={handlePrevMonth}><svg
+                <button onClick={handlePrevMonth}>
+                  <svg
                     width="20"
                     height="20"
                     viewBox="0 0 16 16"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path d="M6 8l4-3.5v7L6 8z" fill="#6484C5"></path>
-                  </svg></button>
+                  </svg>
+                </button>
                 <span
                   onClick={() => toggleMenu("months")}
                 >{`${monthsName[currentMonth]}`}</span>
@@ -271,14 +273,16 @@ function DateInput() {
                 <span
                   onClick={() => toggleMenu("years")}
                 >{`${currentYear}`}</span>
-                <button onClick={handleNextYear}><svg
+                <button onClick={handleNextYear}>
+                  <svg
                     width="20"
                     height="20"
                     viewBox="0 0 16 16"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path d="M10 8l-4 3.5v-7L10 8z" fill="#6484C5"></path>
-                  </svg></button>
+                  </svg>
+                </button>
               </div>
             </div>
             <div className="calendar__main">
@@ -328,7 +332,11 @@ function DateInput() {
                     : setMenuElm("months");
                   if (count == 1) {
                     toggleCalendar();
+                    handleDateClick(
+                      tempDate.toLocaleDateString().split(".")[0]
+                    );
                   }
+
                   setCount(1);
                 }}
               >
