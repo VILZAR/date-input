@@ -292,7 +292,7 @@ input:checked + .slider:before {
   flex-direction: row;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-weight: 500;
 }
 
@@ -402,13 +402,13 @@ input:checked + .slider:before {
   height: 38px;
 }
 
-.light.theme .calendar__days_day.selected {
+.light.theme .selected {
   background-color: #6F7DAD;
   color: white;
   transition: 0.3s;
 }
 
-.dark.theme .calendar__days_day.selected {
+.dark.theme .selected {
   background-color: white;
   color: #142766;
   transition: 0.3s;
@@ -463,4 +463,24 @@ input:checked + .slider:before {
   background-color: #172966;
   color: #edeff3;
   transition: 0.3s;
+}
+
+.calendar__menu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: max-content;
+}
+
+.calendar__menu_item {
+  width: calc(100%/3);
+  height: 60px;
+  padding: 10px;
+  line-height: 100%;
+  font-weight: 500;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

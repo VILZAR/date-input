@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-const mounthName = [
+const monthsName = [
   "Январь",
   "Февраль",
   "Март",
@@ -27,6 +27,9 @@ function validation(value) {
 function DateInput() {
   const [date, setDate] = useState("");
   const [isCalendarOpen, setCalendar] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [menuElm, setMenuElm] = useState("months");
+  const [count, setCount] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [tempDate, setTempDate] = useState(new Date());
@@ -34,6 +37,16 @@ function DateInput() {
 
   const toggleCalendar = () => {
     setCalendar(!isCalendarOpen);
+    if (isMenuOpen) {
+      toggleMenu();
+    }
+  };
+
+  const toggleMenu = (elm) => {
+    setCount(0);
+    setCalendar(!isCalendarOpen);
+    setMenuOpen(!isMenuOpen);
+    setMenuElm(elm);
   };
 
   const handleDateClick = (day) => {
@@ -106,6 +119,55 @@ function DateInput() {
     return days;
   };
 
+  const renderMonths = () => {
+    const months = [];
+    for (let i = 0; i < monthsName.length; i++) {
+      months.push(
+        <div
+          className={`calendar__menu_item ${
+            i === currentMonth ? "selected" : ""
+          }`}
+          key={i}
+          onClick={() => setCurrentMonth(i)}
+        >
+          {monthsName[i]}
+        </div>
+      );
+    }
+    return months;
+  };
+
+  const renderYears = () => {
+    const years = [];
+
+    for (let i = currentYear - 4; i < currentYear; i++) {
+      years.push(
+        <div
+          className="calendar__menu_item"
+          key={i}
+          onClick={() => setCurrentYear(i)}
+        >
+          {i}
+        </div>
+      );
+    }
+
+    for (let i = currentYear; i < currentYear + 8; i++) {
+      years.push(
+        <div
+          className={`calendar__menu_item ${
+            i === currentYear ? "selected" : ""
+          }`}
+          key={i}
+          onClick={() => setCurrentYear(i)}
+        >
+          {i}
+        </div>
+      );
+    }
+    return years;
+  };
+
   const changeHandler = (event) => {
     setDate(event.target.value);
     if (validation(event.target.value)) {
@@ -174,12 +236,16 @@ function DateInput() {
             <div className="calendar__header">
               <div className="calendar__header_month">
                 <button onClick={handlePrevMonth}>🢐</button>
-                <span>{`${mounthName[currentMonth]}`}</span>
+                <span
+                  onClick={() => toggleMenu("months")}
+                >{`${monthsName[currentMonth]}`}</span>
                 <button onClick={handleNextMonth}>🢒</button>
               </div>
               <div className="calendar__header_year">
                 <button onClick={handlePrevYear}>🢐</button>
-                <span>{`${currentYear}`}</span>
+                <span
+                  onClick={() => toggleMenu("years")}
+                >{`${currentYear}`}</span>
                 <button onClick={handleNextYear}>🢒</button>
               </div>
             </div>
@@ -200,6 +266,43 @@ function DateInput() {
                 Подтвердить
               </button>
               <button className="calendar__footer_cancel" onClick={cancel}>
+                Отменить
+              </button>
+            </div>
+          </div>
+        )}
+        {isMenuOpen && (
+          <div
+            className="calendar"
+            style={{ top: ref.current.getBoundingClientRect().height }}
+          >
+            <div className="calendar__header">
+              <div className="calendar__header_month">
+                <span>{`${monthsName[currentMonth]}`}</span>
+              </div>
+              <div className="calendar__header_year">
+                <span>{`${currentYear}`}</span>
+              </div>
+            </div>
+            <div className="calendar__menu">
+              {menuElm === "months" ? renderMonths() : renderYears()}
+            </div>
+            <div className="calendar__footer">
+              <button
+                className="calendar__footer_confirm"
+                onClick={() => {
+                  menuElm === "months"
+                    ? setMenuElm("years")
+                    : setMenuElm("months");
+                  if (count == 1) {
+                    toggleCalendar();
+                  }
+                  setCount(1);
+                }}
+              >
+                Подтвердить
+              </button>
+              <button className="calendar__footer_cancel" onClick={toggleMenu}>
                 Отменить
               </button>
             </div>
