@@ -1,3 +1,6 @@
+## Deploy
+https://vilzar.github.io/date-input/
+
 ## Установка
 
 ```sh
