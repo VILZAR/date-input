@@ -81,7 +81,7 @@ function DateInput() {
 
   const renderCalendar = () => {
     const daysCount = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const firstDay = new Date(currentYear, currentMonth + 1, 1).getDay();
+    const firstDay = new Date(currentYear, currentMonth, 0).getDay();
     const days = [];
 
     for (let i = 0; i < firstDay; i++) {
