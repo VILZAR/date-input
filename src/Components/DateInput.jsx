@@ -235,18 +235,50 @@ function DateInput() {
           >
             <div className="calendar__header">
               <div className="calendar__header_month">
-                <button onClick={handlePrevMonth}>🢐</button>
+                <button onClick={handlePrevMonth}><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M6 8l4-3.5v7L6 8z" fill="#6484C5"></path>
+                  </svg></button>
                 <span
                   onClick={() => toggleMenu("months")}
                 >{`${monthsName[currentMonth]}`}</span>
-                <button onClick={handleNextMonth}>🢒</button>
+                <button onClick={handleNextMonth}>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M10 8l-4 3.5v-7L10 8z" fill="#6484C5"></path>
+                  </svg>
+                </button>
               </div>
               <div className="calendar__header_year">
-                <button onClick={handlePrevYear}>🢐</button>
+                <button onClick={handlePrevYear}>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M6 8l4-3.5v7L6 8z" fill="#6484C5"></path>
+                  </svg>
+                </button>
                 <span
                   onClick={() => toggleMenu("years")}
                 >{`${currentYear}`}</span>
-                <button onClick={handleNextYear}>🢒</button>
+                <button onClick={handleNextYear}><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M10 8l-4 3.5v-7L10 8z" fill="#6484C5"></path>
+                  </svg></button>
               </div>
             </div>
             <div className="calendar__main">

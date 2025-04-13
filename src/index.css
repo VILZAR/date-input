@@ -319,13 +319,13 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-.light.theme .calendar__header button {
-  color: #6484C5;
+.light.theme .calendar__header button svg path {
+  fill: #6484C5;
   transition: 0.3s;
 }
 
-.dark.theme .calendar__header button {
-  color: #C1C8D4;
+.dark.theme .calendar__header button svg path {
+  fill: #C1C8D4;
   transition: 0.3s;
 }
 
