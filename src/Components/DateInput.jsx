@@ -68,7 +68,9 @@ function DateInput() {
   };
 
   const confirm = () => {
-    setDate(tempDate.toISOString().split("T")[0]);
+    const arr = tempDate.toLocaleDateString().split(".");
+    [arr[0], arr[2]] = [arr[2], arr[0]];
+    setDate(arr.join("-"));
     setCalendar(false);
     ref.current.dataset.validation = true;
   };
@@ -79,7 +81,7 @@ function DateInput() {
 
   const renderCalendar = () => {
     const daysCount = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const firstDay = new Date(currentYear, currentMonth + 1, 1).getDay();
     const days = [];
 
     for (let i = 0; i < firstDay; i++) {
@@ -108,6 +110,9 @@ function DateInput() {
     setDate(event.target.value);
     if (validation(event.target.value)) {
       ref.current.dataset.validation = true;
+      setCurrentMonth(Number(event.target.value.split("-")[1]) - 1);
+      setCurrentYear(Number(event.target.value.split("-")[0]));
+      handleDateClick(Number(event.target.value.split("-")[2]));
     } else {
       ref.current.dataset.validation = false;
     }
@@ -117,6 +122,7 @@ function DateInput() {
     if (e.key === "Enter" && validation(date)) {
       ref.current.style.pointerEvents = "none";
       ref.current.classList.add("disable");
+      setCalendar(false);
     } else if (e.key === "Enter" && !validation(date)) {
       ref.current.dataset.validation = false;
     }
@@ -161,7 +167,10 @@ function DateInput() {
           />
         </svg>
         {isCalendarOpen && (
-          <div className="calendar">
+          <div
+            className="calendar"
+            style={{ top: ref.current.getBoundingClientRect().height }}
+          >
             <div className="calendar__header">
               <div className="calendar__header_month">
                 <button onClick={handlePrevMonth}>🢐</button>
