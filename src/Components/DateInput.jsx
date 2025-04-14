@@ -81,7 +81,9 @@ function DateInput() {
   };
 
   const confirm = () => {
-    const arr = tempDate.toLocaleDateString().split(".");
+    const arr = new Date(currentYear, currentMonth, tempDate.getDate())
+      .toLocaleDateString()
+      .split(".");
     [arr[0], arr[2]] = [arr[2], arr[0]];
     setDate(arr.join("-"));
     setCalendar(false);
@@ -139,20 +141,7 @@ function DateInput() {
 
   const renderYears = () => {
     const years = [];
-
-    for (let i = currentYear - 4; i < currentYear; i++) {
-      years.push(
-        <div
-          className="calendar__menu_item"
-          key={i}
-          onClick={() => setCurrentYear(i)}
-        >
-          {i}
-        </div>
-      );
-    }
-
-    for (let i = currentYear; i < currentYear + 8; i++) {
+    for (let i = currentYear - 4; i < currentYear + 8; i++) {
       years.push(
         <div
           className={`calendar__menu_item ${
@@ -200,6 +189,7 @@ function DateInput() {
         onChange={(event) => changeHandler(event)}
         onKeyDown={handleSubmit}
         value={date}
+        max="9999-12-31"
       />
       {date.length > 0 && (
         <span
@@ -336,7 +326,6 @@ function DateInput() {
                       tempDate.toLocaleDateString().split(".")[0]
                     );
                   }
-
                   setCount(1);
                 }}
               >
