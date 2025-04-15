@@ -262,7 +262,7 @@ input:checked + .slider:before {
 
 .dark.theme .calendar {
   background-color: #181F32;
-  border: 2px solid #C1C8D4;
+  border: 2px solid #324d7d;
   transition: 0.3s;
 }
 
@@ -282,8 +282,8 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__header {
-  border-bottom: 2px solid #C1C8D4;
-  background-color: #2F3A5A;
+  border-bottom: 2px solid #324d7d;
+  background-color: #181F32;
   transition: 0.3s;
 }
 
@@ -326,7 +326,7 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__header button svg path {
-  fill: #C1C8D4;
+  fill: #8ea6d0;
   transition: 0.3s;
 }
 
@@ -336,14 +336,14 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__header_year {
-  border-left: 2px solid #C1C8D4;
+  border-left: 2px solid #324d7d;
   transition: 0.3s;
 }
 
 .calendar__main {
   width: 100%;
   height: 268px;
-  padding: 12px 8px;
+  padding: 10px 6px;
 }
 
 .calendar__daysOfWeek {
@@ -361,7 +361,7 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__daysOfWeek {
-  color: #C1C8D4;
+  color: #8196ba;
   transition: 0.3s;
 }
 
@@ -410,8 +410,8 @@ input:checked + .slider:before {
 }
 
 .dark.theme .selected {
-  background-color: white;
-  color: #142766;
+  background-color: rgb(139, 159, 192);
+  color: #08102b;
   transition: 0.3s;
 }
 
@@ -437,7 +437,7 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__footer > * {
-  border-top: 2px solid #C1C8D4;
+  border-top: 2px solid #324d7d;
   transition: 0.3s;
 }
 
@@ -448,7 +448,7 @@ input:checked + .slider:before {
 }
 
 .dark.theme .calendar__footer_cancel {
-  background-color: #3D4C77;
+  background-color: #212c4a;
   color: #D9DBE1;
   transition: 0.3s;
 }
@@ -461,7 +461,7 @@ input:checked + .slider:before {
 }
 
 .dark.theme  .calendar__footer_confirm {
-  background-color: #172966;
+  background-color: #3e6db9;
   color: #edeff3;
   transition: 0.3s;
 }
@@ -472,6 +472,7 @@ input:checked + .slider:before {
   flex-wrap: wrap;
   width: 100%;
   height: max-content;
+  padding: 10px 6px;
 }
 
 .calendar__menu_item {
