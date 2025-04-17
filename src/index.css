@@ -203,17 +203,30 @@ input:checked + .slider:before {
   transition: 0.3s;
 }
 
-.light.theme .disable svg path {
+.date__picker_btn {
+  background: 0;
+  border: 0;
+  height: 15px;
+  width: 15px;
+  padding: 0;
+} 
+
+.light.theme .disable .date__picker_icon path {
   fill: #ADBBD7;
   transition: 0.3s;
 }
 
-.dark.theme .disable svg path {
+.dark.theme .disable .date__picker_icon path {
   fill: #4267A1;
   transition: 0.3s;
 }
 
-.dark.theme svg path {
+.light.theme .date__picker_icon path {
+  fill: #4B7CDD;
+  transition: 0.3s;
+}
+
+.dark.theme .date__picker_icon path {
   fill: #9FB1F0;
   transition: 0.3s;
 }
@@ -227,10 +240,11 @@ input:checked + .slider:before {
   opacity: 0;
   align-items: center;
   font-size: 12px;
-  height: 100%;
   top: 0;
   right: 35px;
   cursor: pointer;
+  background: 0;
+  border: 0;
 }
 
 .light.theme .date__input_clear {

@@ -17,7 +17,8 @@ const monthsName = [
 
 const daysName = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
-function validation(value) { //Валидация даты
+function validation(value) {
+  //Валидация даты
   let validDate = new Date(value);
   if (!isNaN(validDate)) {
     return true;
@@ -37,26 +38,30 @@ function DateInput() {
   const [count, setCount] = useState(0);
   const ref = useRef();
 
-  const toggleCalendar = () => { // Открытие/закрытие календаря
+  const toggleCalendar = () => {
+    // Открытие/закрытие календаря
     setCalendar(!isCalendarOpen);
     if (isMenuOpen) {
       toggleMenu();
     }
   };
 
-  const toggleMenu = (elm) => { // Открытие/закрытие меню
+  const toggleMenu = (elm) => {
+    // Открытие/закрытие меню
     setCount(0);
     setCalendar(!isCalendarOpen);
     setMenuOpen(!isMenuOpen);
     setMenuElm(elm);
   };
 
-  const handleDateClick = (day) => { // Выбор дня
+  const handleDateClick = (day) => {
+    // Выбор дня
     const newDate = new Date(currentYear, currentMonth, day);
     setTempDate(newDate);
   };
 
-  const handlePrevMonth = () => { // Переключение на предыдущий месяц
+  const handlePrevMonth = () => {
+    // Переключение на предыдущий месяц
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear(currentYear - 1);
@@ -65,7 +70,8 @@ function DateInput() {
     }
   };
 
-  const handleNextMonth = () => { // Переключение на следующий месяц
+  const handleNextMonth = () => {
+    // Переключение на следующий месяц
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear(currentYear + 1);
@@ -74,15 +80,18 @@ function DateInput() {
     }
   };
 
-  const handlePrevYear = () => { // Переключение на предыдущий год
+  const handlePrevYear = () => {
+    // Переключение на предыдущий год
     setCurrentYear(currentYear - 1);
   };
 
-  const handleNextYear = () => { // Переключение на следующий год
+  const handleNextYear = () => {
+    // Переключение на следующий год
     setCurrentYear(currentYear + 1);
   };
 
-  const handleConfirm = () => { // Подтверждение выбранной даты
+  const handleConfirm = () => {
+    // Подтверждение выбранной даты
     const arr = new Date(currentYear, currentMonth, tempDate.getDate())
       .toLocaleDateString()
       .split(".");
@@ -92,11 +101,13 @@ function DateInput() {
     ref.current.dataset.validation = true;
   };
 
-  const handleCancel = () => { // Отмена выбора даты
+  const handleCancel = () => {
+    // Отмена выбора даты
     setCalendar(false);
   };
 
-  const renderCalendar = () => { // Рендер дней месяца
+  const renderCalendar = () => {
+    // Рендер дней месяца
     const daysCount = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDay = new Date(currentYear, currentMonth, 0).getDay();
     const days = [];
@@ -115,6 +126,8 @@ function DateInput() {
           }`}
           key={day}
           onClick={() => handleDateClick(day)}
+          onKeyDown={(e) => (e.key === "Enter" ? handleDateClick(day) : null)}
+          tabIndex="0"
         >
           {day}
         </li>
@@ -123,7 +136,8 @@ function DateInput() {
     return days;
   };
 
-  const renderMonths = () => { // Рендер меню (месяцы)
+  const renderMonths = () => {
+    // Рендер меню (месяцы)
     const months = [];
     for (let i = 0; i < monthsName.length; i++) {
       months.push(
@@ -133,6 +147,8 @@ function DateInput() {
           }`}
           key={i}
           onClick={() => setCurrentMonth(i)}
+          onKeyDown={(e) => (e.key === "Enter" ? setCurrentMonth(i) : null)}
+          tabIndex="0"
         >
           {monthsName[i]}
         </li>
@@ -141,7 +157,8 @@ function DateInput() {
     return months;
   };
 
-  const renderYears = () => { // Рендер меню (год)
+  const renderYears = () => {
+    // Рендер меню (год)
     const years = [];
     for (let i = currentYear - 4; i < currentYear + 8; i++) {
       years.push(
@@ -151,6 +168,8 @@ function DateInput() {
           }`}
           key={i}
           onClick={() => setCurrentYear(i)}
+          onKeyDown={(e) => (e.key === "Enter" ? setCurrentYear(i) : null)}
+          tabIndex="0"
         >
           {i}
         </li>
@@ -159,7 +178,8 @@ function DateInput() {
     return years;
   };
 
-  const handleChange = (event) => { // Обработчик ввода в input
+  const handleChange = (event) => {
+    // Обработчик ввода в input
     setDate(event.target.value);
     if (validation(event.target.value)) {
       ref.current.dataset.validation = true;
@@ -171,7 +191,8 @@ function DateInput() {
     }
   };
 
-  const handleSubmit = (e) => { // Имитация отправки формы
+  const handleSubmit = (e) => {
+    // Имитация отправки формы
     if (e.key === "Enter" && validation(date)) {
       ref.current.style.pointerEvents = "none";
       ref.current.classList.add("disable");
@@ -194,32 +215,33 @@ function DateInput() {
         max="9999-12-31"
       />
       {date.length > 0 && (
-        <span
+        <button
           className="date__input_clear"
           onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = 0)}
           onClick={() => setDate("")}
         >
           ✕
-        </span>
+        </button>
       )}
       <div className="date__picker">
-        <svg
-          width="8"
-          height="10"
-          viewBox="0 0 8 10"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          onClick={toggleCalendar}
-          className="date__picker_icon"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M6.91667 1.77865H6.5V0.945312H5.66667V1.77865H2.33333V0.945312H1.5V1.77865H1.08333C0.620833 1.77865 0.25 2.15365 0.25 2.61198V8.44531C0.25 8.90365 0.620833 9.27865 1.08333 9.27865H6.91667C7.375 9.27865 7.75 8.90365 7.75 8.44531V2.61198C7.75 2.15365 7.375 1.77865 6.91667 1.77865ZM6.91667 8.44531H1.08333V3.86198H6.91667V8.44531ZM1.70833 5.52865C1.70833 4.95365 2.175 4.48698 2.75 4.48698C3.325 4.48698 3.79167 4.95365 3.79167 5.52865C3.79167 6.10365 3.325 6.57031 2.75 6.57031C2.175 6.57031 1.70833 6.10365 1.70833 5.52865Z"
-            fill="#4B7CDD"
-          />
-        </svg>
+        <button className="date__picker_btn" onClick={toggleCalendar}>
+          <svg
+            width="8"
+            height="10"
+            viewBox="0 0 8 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="date__picker_icon"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M6.91667 1.77865H6.5V0.945312H5.66667V1.77865H2.33333V0.945312H1.5V1.77865H1.08333C0.620833 1.77865 0.25 2.15365 0.25 2.61198V8.44531C0.25 8.90365 0.620833 9.27865 1.08333 9.27865H6.91667C7.375 9.27865 7.75 8.90365 7.75 8.44531V2.61198C7.75 2.15365 7.375 1.77865 6.91667 1.77865ZM6.91667 8.44531H1.08333V3.86198H6.91667V8.44531ZM1.70833 5.52865C1.70833 4.95365 2.175 4.48698 2.75 4.48698C3.325 4.48698 3.79167 4.95365 3.79167 5.52865C3.79167 6.10365 3.325 6.57031 2.75 6.57031C2.175 6.57031 1.70833 6.10365 1.70833 5.52865Z"
+              fill="#4B7CDD"
+            />
+          </svg>
+        </button>
         {isCalendarOpen && (
           <div
             className="calendar"
