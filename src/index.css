@@ -266,6 +266,7 @@ input:checked + .slider:before {
   justify-content: space-between;
   font-family: Roboto;
   font-weight: 300;
+  user-select: none;
 }
 
 .light.theme .calendar {
