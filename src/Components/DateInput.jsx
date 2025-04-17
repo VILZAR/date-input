@@ -15,7 +15,9 @@ const monthsName = [
   "Декабрь",
 ];
 
-function validation(value) {
+const daysName = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+
+function validation(value) { //Валидация даты
   let validDate = new Date(value);
   if (!isNaN(validDate)) {
     return true;
@@ -25,36 +27,36 @@ function validation(value) {
 }
 
 function DateInput() {
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [tempDate, setTempDate] = useState(new Date());
   const [date, setDate] = useState("");
   const [isCalendarOpen, setCalendar] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [menuElm, setMenuElm] = useState("months");
   const [count, setCount] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [tempDate, setTempDate] = useState(new Date());
   const ref = useRef();
 
-  const toggleCalendar = () => {
+  const toggleCalendar = () => { // Открытие/закрытие календаря
     setCalendar(!isCalendarOpen);
     if (isMenuOpen) {
       toggleMenu();
     }
   };
 
-  const toggleMenu = (elm) => {
+  const toggleMenu = (elm) => { // Открытие/закрытие меню
     setCount(0);
     setCalendar(!isCalendarOpen);
     setMenuOpen(!isMenuOpen);
     setMenuElm(elm);
   };
 
-  const handleDateClick = (day) => {
+  const handleDateClick = (day) => { // Выбор дня
     const newDate = new Date(currentYear, currentMonth, day);
     setTempDate(newDate);
   };
 
-  const handlePrevMonth = () => {
+  const handlePrevMonth = () => { // Переключение на предыдущий месяц
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear(currentYear - 1);
@@ -63,7 +65,7 @@ function DateInput() {
     }
   };
 
-  const handleNextMonth = () => {
+  const handleNextMonth = () => { // Переключение на следующий месяц
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear(currentYear + 1);
@@ -72,15 +74,15 @@ function DateInput() {
     }
   };
 
-  const handlePrevYear = () => {
+  const handlePrevYear = () => { // Переключение на предыдущий год
     setCurrentYear(currentYear - 1);
   };
 
-  const handleNextYear = () => {
+  const handleNextYear = () => { // Переключение на следующий год
     setCurrentYear(currentYear + 1);
   };
 
-  const confirm = () => {
+  const handleConfirm = () => { // Подтверждение выбранной даты
     const arr = new Date(currentYear, currentMonth, tempDate.getDate())
       .toLocaleDateString()
       .split(".");
@@ -90,42 +92,42 @@ function DateInput() {
     ref.current.dataset.validation = true;
   };
 
-  const cancel = () => {
+  const handleCancel = () => { // Отмена выбора даты
     setCalendar(false);
   };
 
-  const renderCalendar = () => {
+  const renderCalendar = () => { // Рендер дней месяца
     const daysCount = new Date(currentYear, currentMonth + 1, 0).getDate();
     const firstDay = new Date(currentYear, currentMonth, 0).getDay();
     const days = [];
 
     for (let i = 0; i < firstDay; i++) {
       days.push(
-        <div className="calendar__days_day empty" key={`empty-${i}`}></div>
+        <li className="calendar__daysList_item empty" key={`empty-${i}`}></li>
       );
     }
 
     for (let day = 1; day <= daysCount; day++) {
       days.push(
-        <div
-          className={`calendar__days_day ${
+        <li
+          className={`calendar__daysList_item ${
             day === tempDate.getDate() ? "selected" : ""
           }`}
           key={day}
           onClick={() => handleDateClick(day)}
         >
           {day}
-        </div>
+        </li>
       );
     }
     return days;
   };
 
-  const renderMonths = () => {
+  const renderMonths = () => { // Рендер меню (месяцы)
     const months = [];
     for (let i = 0; i < monthsName.length; i++) {
       months.push(
-        <div
+        <li
           className={`calendar__menu_item ${
             i === currentMonth ? "selected" : ""
           }`}
@@ -133,17 +135,17 @@ function DateInput() {
           onClick={() => setCurrentMonth(i)}
         >
           {monthsName[i]}
-        </div>
+        </li>
       );
     }
     return months;
   };
 
-  const renderYears = () => {
+  const renderYears = () => { // Рендер меню (год)
     const years = [];
     for (let i = currentYear - 4; i < currentYear + 8; i++) {
       years.push(
-        <div
+        <li
           className={`calendar__menu_item ${
             i === currentYear ? "selected" : ""
           }`}
@@ -151,13 +153,13 @@ function DateInput() {
           onClick={() => setCurrentYear(i)}
         >
           {i}
-        </div>
+        </li>
       );
     }
     return years;
   };
 
-  const changeHandler = (event) => {
+  const handleChange = (event) => { // Обработчик ввода в input
     setDate(event.target.value);
     if (validation(event.target.value)) {
       ref.current.dataset.validation = true;
@@ -169,7 +171,7 @@ function DateInput() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { // Имитация отправки формы
     if (e.key === "Enter" && validation(date)) {
       ref.current.style.pointerEvents = "none";
       ref.current.classList.add("disable");
@@ -186,7 +188,7 @@ function DateInput() {
         id="date"
         name="date"
         placeholder="Выберите дату"
-        onChange={(event) => changeHandler(event)}
+        onChange={(event) => handleChange(event)}
         onKeyDown={handleSubmit}
         value={date}
         max="9999-12-31"
@@ -223,7 +225,7 @@ function DateInput() {
             className="calendar"
             style={{ top: ref.current.getBoundingClientRect().height }}
           >
-            <div className="calendar__header">
+            <header className="calendar__header">
               <div className="calendar__header_month">
                 <button onClick={handlePrevMonth}>
                   <svg
@@ -274,27 +276,29 @@ function DateInput() {
                   </svg>
                 </button>
               </div>
-            </div>
-            <div className="calendar__main">
-              <div className="calendar__daysOfWeek">
-                <div>Пн</div>
-                <div>Вт</div>
-                <div>Ср</div>
-                <div>Чт</div>
-                <div>Пт</div>
-                <div>Сб</div>
-                <div>Вс</div>
-              </div>
-              <div className="calendar__days">{renderCalendar()}</div>
-            </div>
-            <div className="calendar__footer">
-              <button className="calendar__footer_confirm" onClick={confirm}>
+            </header>
+            <main className="calendar__main">
+              <ul className="calendar__daysOfWeek">
+                {daysName.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+              <ul className="calendar__daysList">{renderCalendar()}</ul>
+            </main>
+            <footer className="calendar__footer">
+              <button
+                className="calendar__footer_confirm"
+                onClick={handleConfirm}
+              >
                 Подтвердить
               </button>
-              <button className="calendar__footer_cancel" onClick={cancel}>
+              <button
+                className="calendar__footer_cancel"
+                onClick={handleCancel}
+              >
                 Отменить
               </button>
-            </div>
+            </footer>
           </div>
         )}
         {isMenuOpen && (
@@ -302,18 +306,18 @@ function DateInput() {
             className="calendar"
             style={{ top: ref.current.getBoundingClientRect().height }}
           >
-            <div className="calendar__header">
+            <header className="calendar__header">
               <div className="calendar__header_month">
                 <span>{`${monthsName[currentMonth]}`}</span>
               </div>
               <div className="calendar__header_year">
                 <span>{`${currentYear}`}</span>
               </div>
-            </div>
-            <div className="calendar__menu">
+            </header>
+            <ul className="calendar__menu">
               {menuElm === "months" ? renderMonths() : renderYears()}
-            </div>
-            <div className="calendar__footer">
+            </ul>
+            <footer className="calendar__footer">
               <button
                 className="calendar__footer_confirm"
                 onClick={() => {
@@ -334,7 +338,7 @@ function DateInput() {
               <button className="calendar__footer_cancel" onClick={toggleMenu}>
                 Отменить
               </button>
-            </div>
+            </footer>
           </div>
         )}
       </div>

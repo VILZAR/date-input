@@ -374,7 +374,7 @@ input:checked + .slider:before {
   line-height: 16px;
 }
 
-.calendar__days {
+.calendar__daysList {
   width: 100%;
   height: max-content;
   display: flex;
@@ -384,17 +384,17 @@ input:checked + .slider:before {
   font-weight: 500;
 }
 
-.light.theme .calendar__days {
+.light.theme .calendar__daysList {
   color: #6A7180;
   transition: 0.3s;
 }
 
-.dark.theme .calendar__days {
+.dark.theme .calendar__daysList {
   color: #ffffff;
   transition: 0.3s;
 }
 
-.calendar__days_day {
+.calendar__daysList_item {
   width: calc(100%/7);
   display: flex;
   align-items: center;
@@ -411,7 +411,7 @@ input:checked + .slider:before {
 
 .dark.theme .selected {
   background-color: rgb(139, 159, 192);
-  color: #08102b;
+  color: #181F32;
   transition: 0.3s;
 }
 
