@@ -7,13 +7,13 @@ https://vilzar.github.io/date-input/
 npm i
 ```
 
-### Запуск
+## Запуск
 
 ```sh
 npm start
 ```
 
 
-## Проект выполнен на React.js. <br/>
-## Основная логика компонента - src/components/DateInput.jsx. <br/>
-## Все стили - src/index.css.
+__Проект выполнен на React.js.__  <br/>
+__Основная логика компонента__ - src/components/DateInput.jsx. <br/>
+__Все стили__ - src/index.css.
