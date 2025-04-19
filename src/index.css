@@ -97,7 +97,6 @@ input:checked + .slider:before {
   right: 0;
   width: 30px;
   height: 100%;
-  cursor: pointer;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -122,9 +121,8 @@ input:checked + .slider:before {
   width: 160px;
   border: 0;
   border-radius: 4px;
-  cursor: pointer;
   outline: 0;
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 #date[value=""]::-webkit-datetime-edit {
@@ -236,24 +234,23 @@ input:checked + .slider:before {
   position: absolute;
   width: max-content;
   height: 100%;
-  padding: 0 0 0 7px;
+  padding: 0 2px 0 2px;
   display: flex;
-  opacity: 0;
   align-items: center;
-  font-size: 12px;
+  opacity: 0;
   top: 0;
-  right: 35px;
+  right: 30px;
   cursor: pointer;
   background: 0;
   border: 0;
 }
 
-.light.theme .date__input_clear {
-  color: #6F7DAD;
+.light.theme .date__input_clear path {
+  fill: #6F7DAD;
 }
 
-.dark.theme .date__input_clear {
-  color: #9FB1F0;
+.dark.theme .date__input_clear path {
+  fill: #9FB1F0;
 }
 
 .calendar {
@@ -415,8 +412,17 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
   height: 38px;
+}
+
+.calendar__daysList_item button, .calendar__menu_item  button {
+  background: none;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  font: inherit;
+  padding: 10px;
 }
 
 .light.theme .selected {
@@ -494,7 +500,6 @@ input:checked + .slider:before {
 .calendar__menu_item {
   width: calc(100%/3);
   height: 60px;
-  padding: 10px;
   line-height: 100%;
   font-weight: 500;
   font-size: 12px;

@@ -1,18 +1,17 @@
 import { useState } from "react";
 import Dates from "./Components/Dates";
 
-
 function App() {
   const [theme, setTheme] = useState("light");
 
-  const switcher  = () => {
-    theme === 'light' ? setTheme('dark'): setTheme('light');
-  }
+  const switcher = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
 
   return (
-    <div className={theme + ' theme'}>
-      <label className="switcher">
-        <input type="checkbox" onClick={switcher}/>
+    <div className={theme + " theme"}>
+      <label className="switcher" title="Сменить тему">
+        <input type="checkbox" onClick={switcher} />
         <span className="slider"></span>
       </label>
       <header className="main-header">
@@ -21,7 +20,7 @@ function App() {
         </h1>
       </header>
       <main>
-        <Dates/>
+        <Dates />
       </main>
     </div>
   );

@@ -35,7 +35,7 @@ function DateInput() {
   const [isCalendarOpen, setCalendar] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [menuElm, setMenuElm] = useState("months");
-  const [count, setCount] = useState(0);
+  const [secondMenu, setSecondMenu] = useState(false);
   const ref = useRef();
 
   const toggleCalendar = () => {
@@ -48,7 +48,7 @@ function DateInput() {
 
   const toggleMenu = (elm) => {
     // Открытие/закрытие меню
-    setCount(0);
+    setSecondMenu(0);
     setCalendar(!isCalendarOpen);
     setMenuOpen(!isMenuOpen);
     setMenuElm(elm);
@@ -127,9 +127,8 @@ function DateInput() {
           key={day}
           onClick={() => handleDateClick(day)}
           onKeyDown={(e) => (e.key === "Enter" ? handleDateClick(day) : null)}
-          tabIndex="0"
         >
-          {day}
+          <button>{day}</button>
         </li>
       );
     }
@@ -148,9 +147,8 @@ function DateInput() {
           key={i}
           onClick={() => setCurrentMonth(i)}
           onKeyDown={(e) => (e.key === "Enter" ? setCurrentMonth(i) : null)}
-          tabIndex="0"
         >
-          {monthsName[i]}
+          <button>{monthsName[i]}</button>
         </li>
       );
     }
@@ -169,9 +167,8 @@ function DateInput() {
           key={i}
           onClick={() => setCurrentYear(i)}
           onKeyDown={(e) => (e.key === "Enter" ? setCurrentYear(i) : null)}
-          tabIndex="0"
         >
-          {i}
+          <button>{i}</button>
         </li>
       );
     }
@@ -220,12 +217,29 @@ function DateInput() {
           onMouseEnter={(e) => (e.currentTarget.style.opacity = 1)}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = 0)}
           onClick={() => setDate("")}
+          title="Очистить"
         >
-          ✕
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 16 16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M4.11 2.697L2.698 4.11 6.586 8l-3.89 3.89 1.415 1.413L8 9.414l3.89 3.89 1.413-1.415L9.414 8l3.89-3.89-1.415-1.413L8 6.586l-3.89-3.89z"
+              fill="#6F7DAD"
+            ></path>
+          </svg>
         </button>
       )}
       <div className="date__picker">
-        <button className="date__picker_btn" onClick={toggleCalendar}>
+        <button
+          className="date__picker_btn"
+          onClick={toggleCalendar}
+          title="Открыть календарь"
+        >
           <svg
             width="8"
             height="10"
@@ -249,7 +263,7 @@ function DateInput() {
           >
             <header className="calendar__header">
               <div className="calendar__header_month">
-                <button onClick={handlePrevMonth}>
+                <button title="Предыдущий месяц" onClick={handlePrevMonth}>
                   <svg
                     width="20"
                     height="20"
@@ -260,9 +274,13 @@ function DateInput() {
                   </svg>
                 </button>
                 <span
+                  tabIndex="0"
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? toggleMenu("months") : null
+                  }
                   onClick={() => toggleMenu("months")}
                 >{`${monthsName[currentMonth]}`}</span>
-                <button onClick={handleNextMonth}>
+                <button title="Следующий месяц" onClick={handleNextMonth}>
                   <svg
                     width="20"
                     height="20"
@@ -274,7 +292,7 @@ function DateInput() {
                 </button>
               </div>
               <div className="calendar__header_year">
-                <button onClick={handlePrevYear}>
+                <button title="Предыдущий год" onClick={handlePrevYear}>
                   <svg
                     width="20"
                     height="20"
@@ -285,9 +303,13 @@ function DateInput() {
                   </svg>
                 </button>
                 <span
+                  tabIndex="0"
+                  onKeyDown={(e) =>
+                    e.key === "Enter" ? toggleMenu("years") : null
+                  }
                   onClick={() => toggleMenu("years")}
                 >{`${currentYear}`}</span>
-                <button onClick={handleNextYear}>
+                <button title="Следующий год" onClick={handleNextYear}>
                   <svg
                     width="20"
                     height="20"
@@ -346,13 +368,13 @@ function DateInput() {
                   menuElm === "months"
                     ? setMenuElm("years")
                     : setMenuElm("months");
-                  if (count == 1) {
+                  if (secondMenu) {
                     toggleCalendar();
                     handleDateClick(
                       tempDate.toLocaleDateString().split(".")[0]
                     );
                   }
-                  setCount(1);
+                  setSecondMenu(true);
                 }}
               >
                 Подтвердить
