@@ -118,6 +118,7 @@ input:checked + .slider:before {
 
 .date__input input {
   padding: 10px;
+  height: 36px;
   width: 160px;
   border: 0;
   border-radius: 4px;
